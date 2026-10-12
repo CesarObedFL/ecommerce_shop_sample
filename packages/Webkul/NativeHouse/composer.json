@@ -1,0 +1,17 @@
+{
+    "name": "webkul/native-house",
+    "description": "Native House theme for Bagisto",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Webkul\\NativeHouse\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\NativeHouse\\Providers\\NativeHouseServiceProvider"
+            ]
+        }
+    }
+}
