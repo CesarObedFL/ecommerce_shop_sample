@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Tell Tailwind to scan your theme's Blade views for utility classes */
+@source "../../views/**/*.blade.php";
+
+/* You can also scan Bagisto's core shop views if you need to extend them */
+@source "../../../../../Shop/src/Resources/views/**/*.blade.php";
+
+/* Define your theme's design tokens here */
+@theme {
+    /* NativeHouse color palette */
+    --color-sage: #8A9A5B;
+    --color-sand: #E8DCC4;
+    --color-terracotta: #C87D5A;
+    --color-charcoal: #2E2E2E;
+    --color-cream: #FDFBF7;
+
+    /* Typography */
+    --font-display: "Playfair Display", serif;
+    --font-body: "Inter", sans-serif;
+}
+
+/* Add any custom base styles or components here */
+@layer base {
+    body {
+        @apply bg-cream text-charcoal font-body;
+    }
+}
