@@ -13,7 +13,17 @@ class NativeHouseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Routes and views will be registered here        
+        // Register the theme's views under the 'native-house' namespace
+        $this->loadViewsFrom(
+            __DIR__ . '/../Resources/views',
+            'native-house'
+        );
+
+        // Register the theme's language files
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../Resources/lang',
+            'native-house'
+        );        
     }
 
     /**
