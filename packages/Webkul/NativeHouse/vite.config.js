@@ -1,50 +1,43 @@
-import { defineConfig, loadEnv } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
-import path from 'path';
+import { defineConfig, loadEnv } from "vite";
+import laravel from "laravel-vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
 
 export default defineConfig(({ mode }) => {
-    // Load environment variables from the Bagisto root .env file
-    const envDir = '../../../';
+    const envDir = "../../../";
+
     Object.assign(process.env, loadEnv(mode, envDir));
 
     return {
+        root: __dirname,
         build: {
             emptyOutDir: true,
-            outDir: '../../../public/themes/native-house/build',
-            manifest: true,
+            manifest: 'manifest.json',
         },
         server: {
-            host: process.env.VITE_HOST || 'localhost',
+            host: process.env.VITE_HOST || "localhost",
             port: process.env.VITE_PORT || 5173,
             cors: true,
-            hmr: {
-                host: process.env.VITE_HMR_HOST || 'localhost',
-            },
         },
         plugins: [
             tailwindcss(),
             laravel({
-                // The hot file is used by Bagisto to know if the Vite dev server is running
-                hotFile: '../../../public/native-house-vite.hot',
-                // The public directory relative to the project root
-                publicDirectory: '../../../public',
-                // The build directory where compiled assets will be placed
-                buildDirectory: 'themes/native-house/build',
-                // The entry points for your CSS and JS
+                hotFile: "../../../public/native-house-vite.hot",
+                publicDirectory: "../../../public",
+                buildDirectory: "themes/native-house/build",
                 input: [
-                    'src/Resources/assets/css/app.css',
-                    'src/Resources/assets/js/app.js',
+                    "src/Resources/assets/css/app.css",
+                    "src/Resources/assets/js/app.js",
                 ],
-                refresh: [
-                    'src/Resources/views/**/*.blade.php',
-                ],
+                refresh: ["src/Resources/views/**"],
+                experimental: {
+                    renderBuiltUrl(filename, { hostId, hostType, type }) {
+                        if (hostType === "css") {
+                            return path.basename(filename);
+                        }
+                    },
+                },
             }),
         ],
-        resolve: {
-            alias: {
-                '@': path.resolve(__dirname, 'src/Resources/assets'),
-            },
-        },
     };
 });

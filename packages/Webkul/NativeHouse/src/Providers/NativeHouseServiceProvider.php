@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\CasaNativa\Providers;
+namespace Webkul\NativeHouse\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,17 +13,15 @@ class NativeHouseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Register the theme's views under the 'native-house' namespace
         $this->loadViewsFrom(
             __DIR__ . '/../Resources/views',
             'native-house'
         );
 
-        // Register the theme's language files
         $this->loadTranslationsFrom(
             __DIR__ . '/../Resources/lang',
             'native-house'
-        );        
+        );
     }
 
     /**

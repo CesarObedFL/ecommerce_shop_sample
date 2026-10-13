@@ -44,6 +44,7 @@ use Webkul\Stripe\Providers\StripeServiceProvider;
 use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
+use Webkul\NativeHouse\Providers\NativeHouseServiceProvider;
 
 return [
     /**
@@ -97,4 +98,5 @@ return [
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,
+    NativeHouseServiceProvider::class,
 ];

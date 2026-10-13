@@ -185,6 +185,16 @@ return [
                 ],
             ],
         ],
+        'native-house' => [
+            'name'        => 'Casa Nativa',
+            'assets_path' => 'public/themes/native-house',
+            'views_path'  => 'packages/Webkul/NativeHouse/src/Resources/views',
+            'vite' => [
+                'hot_file'                 => 'native-house-vite.hot',
+                'build_directory'          => 'themes/native-house/build',
+                'package_assets_directory' => 'src/Resources/assets',
+            ],
+        ],
     ],
 
     /*

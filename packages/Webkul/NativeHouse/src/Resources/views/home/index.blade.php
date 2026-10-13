@@ -1,4 +1,4 @@
-@extends('native-house::components.layouts.base')
+@extends('shop::components.layouts.base')
 
 @section('title', __('native-house::app.brand.name'))
 
