@@ -1,6 +1,7 @@
 {
     "name": "native-house",
     "private": true,
+    "type": "module",
     "description": "NativeHouse theme for Bagisto",
     "scripts": {
         "dev": "vite",

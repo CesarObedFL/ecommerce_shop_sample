@@ -45,3 +45,4 @@ skills-lock.json
 /vendor
 yarn.lock
 yarn-error.log
+*node_modules
