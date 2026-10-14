@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88691030aba35842903e3147096058b8",
+    "content-hash": "9edfed7af5009525c8c3ec9d3242711b",
     "packages": [
         {
             "name": "apimatic/core",
@@ -13411,6 +13411,33 @@
                 }
             ],
             "time": "2026-09-12T18:50:35+00:00"
+        },
+        {
+            "name": "webkul/native-house",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/Webkul/NativeHouse",
+                "reference": "943c71ab084eaf538c383fbf217b5f107067a68e"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webkul\\NativeHouse\\Providers\\NativeHouseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webkul\\NativeHouse\\": "src/"
+                }
+            },
+            "description": "Native House theme for Bagisto",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         }
     ],
     "packages-dev": [
@@ -17342,7 +17369,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "webkul/native-house": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

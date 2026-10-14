@@ -53,7 +53,8 @@
         "stripe/stripe-php": "^17.3",
         "symfony/brevo-mailer": "^7.4",
         "symfony/http-client": "^7.4",
-        "web-token/jwt-framework": "^4.1"
+        "web-token/jwt-framework": "^4.1",
+        "webkul/native-house": "*@dev"
     },
     "require-dev": {
         "bagisto/laravel-datafaker": "2.3.*",

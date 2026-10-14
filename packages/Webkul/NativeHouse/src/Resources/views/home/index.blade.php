@@ -1,4 +1,4 @@
-@extends('shop::components.layouts.base')
+@extends('native-house::components.layouts.base')
 
 @section('title', __('native-house::app.brand.name'))
 
@@ -44,7 +44,7 @@
                     >
                     <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
                         <span class="text-cream text-lg font-display">
-                            {{ __('native-house::app.categories.' . $category) }}
+                            {{ __('shop::app.categories.' . $category) }}
                         </span>
                     </div>
                 </a>
