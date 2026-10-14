@@ -44,7 +44,7 @@
                     >
                     <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
                         <span class="text-cream text-lg font-display">
-                            {{ __('shop::app.categories.' . $category) }}
+                            {{ __('native-house::app.categories.' . $category) }}
                         </span>
                     </div>
                 </a>

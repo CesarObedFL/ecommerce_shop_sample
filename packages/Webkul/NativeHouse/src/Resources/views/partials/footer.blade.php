@@ -1,9 +1,4 @@
 <footer class="w-full bg-charcoal text-cream mt-24">
-    <div style="padding: 20px; background: yellow; color: black;">
-        <p>Prueba literal: HOLA NATIVO</p>
-        <p>Traducción: {{ __('native-house::app.home.hero_title') }}</p>
-        <p>Locale: {{ app()->getLocale() }}</p>
-    </div>
     <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
             <h3 class="text-lg font-display mb-4">
