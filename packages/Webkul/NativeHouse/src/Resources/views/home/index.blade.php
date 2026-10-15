@@ -36,7 +36,7 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-            <a href="#" class="group relative block overflow-hidden rounded-lg">
+            <a href="furniture" class="group relative block overflow-hidden rounded-lg">
                 <img
                     src="https://images.unsplash.com/photo-1599696848652-f0ff23bc911f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
                     alt="furniture"
