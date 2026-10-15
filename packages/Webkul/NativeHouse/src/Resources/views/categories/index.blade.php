@@ -1,111 +1,326 @@
-@extends('shop::components.layouts.base')
+<!-- SEO Meta Content -->
+@push('meta')
+    <meta
+        name="description"
+        content="{{ trim($category->meta_description) != "" ? $category->meta_description : \Illuminate\Support\Str::limit(strip_tags($category->description), 120, '') }}"
+    />
 
-@section('title', __('native-house::app.brand.name'))
+    <meta
+        name="keywords"
+        content="{{ $category->meta_keywords }}"
+    />
 
-@section('content')
-    @foreach ($sections as $section)
-        @php ($data = $section->options) @endphp
-
-        @php ($marks = ($preview ?? false) && ! $section->getTypeInstance()?->rendersInLayout())
-
-        @if ($marks)
-            <div
-                data-section-id="{{ $section->id }}"
-                data-section-name="{{ $section->name }}"
-            >
-        @endif
-
-        @switch ($section->type)
-            @case ('hero_banner')
-                @php ($slide = $data['slides'][0] ?? null) @endphp
-                @if ($slide)
-                    @php ($urls = bagisto_theme_storage()->imageUrls($slide['image'] ?? null)) @endphp
-                    <section class="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
-                        <img
-                            src="{{ $urls['srcset']['large'] ?? $urls['url'] ?? 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&q=80' }}"
-                            alt="{{ $slide['heading'] ?? '' }}"
-                            class="absolute inset-0 w-full h-full object-cover"
-                        >
-                        <div class="absolute inset-0 bg-charcoal/40"></div>
-
-                        <div class="relative z-10 text-center text-cream max-w-3xl px-6">
-                            <h1 class="text-5xl md:text-6xl font-display mb-6">
-                                {{ $slide['heading'] ?? __('native-house::app.home.hero_title') }}
-                            </h1>
-                            <p class="text-lg md:text-xl mb-8">
-                                {{ $slide['subheading'] ?? __('native-house::app.home.hero_subtitle') }}
-                            </p>
-                            <a
-                                href="{{ $slide['link'] ?? '#' }}"
-                                class="inline-block bg-sage text-cream px-8 py-3 rounded-full text-sm uppercase tracking-wider hover:bg-terracotta transition"
-                            >
-                                {{ $slide['button_text'] ?? __('native-house::app.home.hero_cta') }}
-                            </a>
-                        </div>
-                    </section>
-                @endif
-                @break
-
-            @case (\Webkul\Theme\Enums\SectionTypeEnum::CATEGORY_CAROUSEL->value)
-                <section class="max-w-7xl mx-auto px-6 py-24">
-                    <h2 class="text-3xl font-display text-center mb-12">
-                        {{ $data['title'] ?? 'Shop by Category' }}
-                    </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        @foreach ($data['categories'] ?? [] as $category)
-                            <a href="{{ $category['url'] ?? '#' }}" class="group relative block overflow-hidden rounded-lg">
-                                <img
-                                    src="{{ $category['image'] ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop' }}"
-                                    alt="{{ $category['name'] ?? '' }}"
-                                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                                >
-                                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
-                                    <span class="text-cream text-lg font-display">{{ $category['name'] ?? '' }}</span>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-                @break
-
-            @case (\Webkul\Theme\Enums\SectionTypeEnum::PRODUCT_CAROUSEL->value)
-                <section class="max-w-7xl mx-auto px-6 py-24">
-                    <h2 class="text-3xl font-display text-center mb-12">
-                        {{ $data['title'] ?? 'Featured Products' }}
-                    </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        @foreach ($data['products'] ?? [] as $product)
-                            <a href="{{ $product['url'] ?? '#' }}" class="group">
-                                <img
-                                    src="{{ $product['image'] ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=500&fit=crop' }}"
-                                    alt="{{ $product['name'] ?? '' }}"
-                                    class="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition duration-500 mb-4"
-                                >
-                                <h3 class="text-sm font-medium">{{ $product['name'] ?? '' }}</h3>
-                                <p class="text-sm text-charcoal/60">{{ $product['price'] ?? '' }}</p>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-                @break
-
-            @case (\Webkul\Theme\Enums\SectionTypeEnum::STATIC_CONTENT->value)
-                <section class="max-w-7xl mx-auto px-6 py-24">
-                    {!! $data['html'] ?? '' !!}
-                </section>
-                @break
-
-            @case (\Webkul\Theme\Enums\SectionTypeEnum::FOOTER_LINKS->value)
-                {{-- El footer se renderiza en el layout, no aquí --}}
-                @break
-        @endswitch
-
-        @if ($marks)
-            </div>
-        @endif
-    @endforeach
-
-    @if ($preview ?? false)
-        @include('shop::home.preview-bridge')
+    @if (core()->getConfigData('catalog.rich_snippets.categories.enable'))
+        <script type="application/ld+json">
+            {!! app(\Webkul\Product\Helpers\SEO::class)->getCategoryJsonLd($category) !!}
+        </script>
     @endif
-@endsection
+@endPush
+
+<x-shop::layouts>
+    <x-slot:title>
+        {{ trim($category->meta_title) != "" ? $category->meta_title : $category->name }}
+    </x-slot>
+
+    {{-- Category Header --}}
+    <section class="w-full bg-sand/30 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-display text-charcoal mb-4">
+                {{ $category->name }}
+            </h1>
+            @if ($category->description)
+                <div class="text-lg text-charcoal/70 max-w-2xl">
+                    {!! $category->description !!}
+                </div>
+            @endif
+        </div>
+    </section>
+
+    {{-- Banner (si existe) --}}
+    @if ($category->banner_path)
+        <div class="max-w-7xl mx-auto px-6 mt-8">
+            <img
+                src="{{ $category->banner_url }}"
+                alt="{{ $category->banner_alt ?: $category->name }}"
+                class="w-full h-64 object-cover rounded-lg"
+            >
+        </div>
+    @endif
+
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-category-template"
+        >
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <div class="flex items-start gap-10 max-lg:gap-5">
+                    <!-- Product Listing Filters -->
+                    @include('shop::categories.filters')
+
+                    <!-- Product Listing Container -->
+                    <div class="flex-1">
+                        <!-- Desktop Product Listing Toolbar -->
+                        <div class="max-md:hidden">
+                            @include('shop::categories.toolbar')
+                        </div>
+
+                        <!-- Product List Card Container -->
+                        <div
+                            class="mt-8 grid grid-cols-1 gap-6"
+                            v-if="(filters.toolbar.applied.mode ?? filters.toolbar.default.mode) === 'list'"
+                        >
+                            <!-- Product Card Shimmer Effect -->
+                            <template v-if="isLoading">
+                                <x-shop::shimmer.products.cards.list count="12" />
+                            </template>
+
+                            <!-- Product Card Listing -->
+                            {!! view_render_event('bagisto.shop.categories.view.list.product_card.before') !!}
+
+                            <template v-else>
+                                <template v-if="products.length">
+                                    <x-shop::products.card
+                                        ::mode="'list'"
+                                        v-for="product in products"
+                                    />
+                                </template>
+
+                                <!-- Empty Products Container -->
+                                <template v-else>
+                                    <div class="m-auto grid w-full place-content-center items-center justify-items-center py-32 text-center">
+                                        <img
+                                            class="max-md:h-25 max-md:w-25"
+                                            src="{{ bagisto_asset('images/thank-you.png') }}"
+                                            alt="@lang('shop::app.categories.view.empty')"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+
+                                        <p
+                                            class="text-xl max-md:text-sm"
+                                            role="heading"
+                                        >
+                                            @lang('shop::app.categories.view.empty')
+                                        </p>
+                                    </div>
+                                </template>
+                            </template>
+
+                            {!! view_render_event('bagisto.shop.categories.view.list.product_card.after') !!}
+                        </div>
+
+                        <!-- Product Grid Card Container -->
+                        <div v-else class="mt-8 max-md:mt-5">
+                            <!-- Product Card Shimmer Effect -->
+                            <template v-if="isLoading">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    <x-shop::products.card
+                                        ::mode="'grid'"
+                                        v-for="product in products"
+                                    />
+                                </div>
+                            </template>
+
+                            {!! view_render_event('bagisto.shop.categories.view.grid.product_card.before') !!}
+
+                            <!-- Product Card Listing -->
+                            <template v-else>
+                                <template v-if="products.length">
+                                    <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
+                                        <x-shop::products.card
+                                            ::mode="'grid'"
+                                            v-for="product in products"
+                                        />
+                                    </div>
+                                </template>
+
+                                <!-- Empty Products Container -->
+                                <template v-else>
+                                    <div class="m-auto grid w-full place-content-center items-center justify-items-center py-32 text-center">
+                                        <img
+                                            class="max-md:h-25 max-md:w-25"
+                                            src="{{ bagisto_asset('images/thank-you.png') }}"
+                                            alt="@lang('shop::app.categories.view.empty')"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+
+                                        <p
+                                            class="text-xl max-md:text-sm"
+                                            role="heading"
+                                        >
+                                            @lang('shop::app.categories.view.empty')
+                                        </p>
+                                    </div>
+                                </template>
+                            </template>
+
+                            {!! view_render_event('bagisto.shop.categories.view.grid.product_card.after') !!}
+                        </div>
+
+                        {!! view_render_event('bagisto.shop.categories.view.load_more_button.before') !!}
+
+                        <!-- Load More Button -->
+                        <button
+                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-11 py-3 text-center text-base max-md:rounded-lg max-sm:mt-6 max-sm:px-6 max-sm:py-1.5 max-sm:text-sm"
+                            @click="loadMoreProducts"
+                            v-if="links.next && ! loader"
+                        >
+                            @lang('shop::app.categories.view.load-more')
+                        </button>
+
+                        <button
+                            v-else-if="links.next"
+                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-[74.5px] py-3.5 text-center text-base max-md:rounded-lg max-md:py-3 max-sm:mt-6 max-sm:px-[50.8px] max-sm:py-1.5"
+                        >
+                            <!-- Spinner -->
+                            <img
+                                class="h-5 w-5 animate-spin text-navyBlue"
+                                src="{{ bagisto_asset('images/spinner.svg') }}"
+                                alt="Loading"
+                            />
+                        </button>
+
+                        {!! view_render_event('bagisto.shop.categories.view.grid.load_more_button.after') !!}
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="module">
+            app.component('v-category', {
+                template: '#v-category-template',
+
+                data() {
+                    return {
+                        isMobile: window.innerWidth <= 767,
+
+                        isLoading: true,
+
+                        isDrawerActive: {
+                            toolbar: false,
+
+                            filter: false,
+                        },
+
+                        filters: {
+                            toolbar: {
+                                default: {},
+
+                                applied: {},
+                            },
+
+                            filter: {},
+                        },
+
+                        products: [],
+
+                        links: {},
+
+                        loader: false,
+                    }
+                },
+
+                computed: {
+                    queryParams() {
+                        let queryParams = Object.assign({}, this.filters.filter, this.filters.toolbar.applied);
+
+                        return this.removeJsonEmptyValues(queryParams);
+                    },
+
+                    queryString() {
+                        return this.jsonToQueryString(this.queryParams);
+                    },
+                },
+
+                watch: {
+                    queryParams() {
+                        this.getProducts();
+                    },
+
+                    queryString() {
+                        window.history.pushState({}, '', '?' + this.queryString);
+                    },
+                },
+
+                methods: {
+                    setFilters(type, filters) {
+                        this.filters[type] = filters;
+                    },
+
+                    clearFilters(type, filters) {
+                        this.filters[type] = {};
+                    },
+
+                    getProducts() {
+                        this.isDrawerActive = {
+                            toolbar: false,
+
+                            filter: false,
+                        };
+
+                        document.body.style.overflow ='scroll';
+
+                        this.isLoading = true;
+
+                        this.$axios.get("{{ route('shop.api.products.index', ['category_id' => $category->id]) }}", {
+                            params: this.queryParams
+                        })
+                            .then(response => {
+                                this.isLoading = false;
+
+                                this.products = response.data.data;
+
+                                this.links = response.data.links;
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                    },
+
+                    loadMoreProducts() {
+                        if (! this.links.next) {
+                            return;
+                        }
+
+                        this.loader = true;
+
+                        this.$axios.get(this.links.next)
+                            .then(response => {
+                                this.loader = false;
+
+                                this.products = [...this.products, ...response.data.data];
+
+                                this.links = response.data.links;
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                    },
+
+                    removeJsonEmptyValues(params) {
+                        Object.keys(params).forEach(function (key) {
+                            if ((! params[key] && params[key] !== undefined)) {
+                                delete params[key];
+                            }
+
+                            if (Array.isArray(params[key])) {
+                                params[key] = params[key].join(',');
+                            }
+                        });
+
+                        return params;
+                    },
+
+                    jsonToQueryString(params) {
+                        let parameters = new URLSearchParams();
+
+                        for (const key in params) {
+                            parameters.append(key, params[key]);
+                        }
+
+                        return parameters.toString();
+                    }
+                },
+            });
+        </script>
+    @endPushOnce
+</x-shop::layouts>
