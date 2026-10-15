@@ -2,6 +2,9 @@
 
 use Webkul\Theme\Enums\SectionTypeEnum;
 use Webkul\NativeHouse\Sections\HeroBanner;
+use Webkul\NativeHouse\ImageTemplates\ProductCard;
+use Webkul\NativeHouse\ImageTemplates\CategoryTile;
+use Webkul\NativeHouse\ImageTemplates\HeroSlide;
 
 return [
 
@@ -200,6 +203,19 @@ return [
                 'sections' => [
                     \Webkul\NativeHouse\Sections\HeroBanner::class,
                     ...SectionTypeEnum::cases(),
+                ],
+                'image_cache' => [
+                    'templates' => [
+                        'product_card'  => \Webkul\NativeHouse\ImageTemplates\ProductCard::class,
+                        'category_tile' => \Webkul\NativeHouse\ImageTemplates\CategoryTile::class,
+                        'hero_slide'    => \Webkul\NativeHouse\ImageTemplates\HeroSlide::class,
+                    ],
+                    'product_images' => [
+                        'product_card',
+                    ],
+                    'category_images' => [
+                        'category_tile',
+                    ],
                 ],
             ],
         ],
