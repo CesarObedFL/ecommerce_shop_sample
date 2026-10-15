@@ -10,6 +10,15 @@ return [
         'hero_subtitle' => 'Discover pieces that bring nature and harmony into your home.',
         'hero_cta'      => 'Explore the collection',
     ],
+    'sections' => [
+        'hero-banner'  => 'Hero Banner',
+        'slides'       => 'Slides',
+        'add-slide'    => 'Add Slide',
+        'image'        => 'Image',
+        'heading'      => 'Heading',
+        'subheading'   => 'Subheading',
+        'button-text'  => 'Button Text',
+    ],
     'categories' => [
         'furniture'   => 'Furniture',
         'lighting'    => 'Lighting',
