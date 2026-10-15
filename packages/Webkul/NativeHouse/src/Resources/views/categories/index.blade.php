@@ -1,115 +1,111 @@
 @extends('shop::components.layouts.base')
 
-@section('title', $category->name ?? 'Shop')
+@section('title', __('native-house::app.brand.name'))
 
 @section('content')
-    {{-- Category Header --}}
-    <section class="w-full bg-sand/30 py-16">
-        <div class="max-w-7xl mx-auto px-6">
-            <h1 class="text-4xl md:text-5xl font-display text-charcoal mb-4">
-                {{ $category->name ?? 'Shop' }}
-            </h1>
-            @if (! empty($category->description))
-                <p class="text-lg text-charcoal/70 max-w-2xl">
-                    {{ $category->description }}
-                </p>
-            @endif
-        </div>
-    </section>
+    @foreach ($sections as $section)
+        @php ($data = $section->options) @endphp
 
-    {{-- Products Grid --}}
-    <section class="max-w-7xl mx-auto px-6 py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {{-- Filters Sidebar --}}
-            <aside class="lg:col-span-1">
-                <h3 class="text-lg font-display mb-6">Filters</h3>
+        @php ($marks = ($preview ?? false) && ! $section->getTypeInstance()?->rendersInLayout())
 
-                {{-- Price Filter --}}
-                <div class="mb-8">
-                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-3">Price</h4>
-                    <div class="space-y-2">
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>Under $100</span>
-                        </label>
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>$100 - $500</span>
-                        </label>
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>Over $500</span>
-                        </label>
-                    </div>
-                </div>
+        @if ($marks)
+            <div
+                data-section-id="{{ $section->id }}"
+                data-section-name="{{ $section->name }}"
+            >
+        @endif
 
-                {{-- Material Filter --}}
-                <div class="mb-8">
-                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-3">Material</h4>
-                    <div class="space-y-2">
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>Wood</span>
-                        </label>
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>Linen</span>
-                        </label>
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" class="rounded border-sand text-sage focus:ring-sage">
-                            <span>Ceramic</span>
-                        </label>
-                    </div>
-                </div>
-            </aside>
+        @switch ($section->type)
+            @case ('hero_banner')
+                @php ($slide = $data['slides'][0] ?? null) @endphp
+                @if ($slide)
+                    @php ($urls = bagisto_theme_storage()->imageUrls($slide['image'] ?? null)) @endphp
+                    <section class="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
+                        <img
+                            src="{{ $urls['srcset']['large'] ?? $urls['url'] ?? 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&q=80' }}"
+                            alt="{{ $slide['heading'] ?? '' }}"
+                            class="absolute inset-0 w-full h-full object-cover"
+                        >
+                        <div class="absolute inset-0 bg-charcoal/40"></div>
 
-            {{-- Products --}}
-            <div class="lg:col-span-3">
-                {{-- Sort Bar --}}
-                <div class="flex items-center justify-between mb-8">
-                    <p class="text-sm text-charcoal/60">
-                        {{ $products->total() ?? 0 }} products
-                    </p>
-                    <select class="text-sm border-sand rounded-md focus:ring-sage focus:border-sage">
-                        <option>Sort by: Featured</option>
-                        <option>Price: Low to High</option>
-                        <option>Price: High to Low</option>
-                        <option>Newest</option>
-                    </select>
-                </div>
+                        <div class="relative z-10 text-center text-cream max-w-3xl px-6">
+                            <h1 class="text-5xl md:text-6xl font-display mb-6">
+                                {{ $slide['heading'] ?? __('native-house::app.home.hero_title') }}
+                            </h1>
+                            <p class="text-lg md:text-xl mb-8">
+                                {{ $slide['subheading'] ?? __('native-house::app.home.hero_subtitle') }}
+                            </p>
+                            <a
+                                href="{{ $slide['link'] ?? '#' }}"
+                                class="inline-block bg-sage text-cream px-8 py-3 rounded-full text-sm uppercase tracking-wider hover:bg-terracotta transition"
+                            >
+                                {{ $slide['button_text'] ?? __('native-house::app.home.hero_cta') }}
+                            </a>
+                        </div>
+                    </section>
+                @endif
+                @break
 
-                {{-- Product Grid --}}
-                @if (isset($products) && $products->count())
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach ($products as $product)
-                            <a href="{{ route('shop.product_or_category.index', $product->url_key) }}" class="group">
-                                <div class="relative overflow-hidden rounded-lg mb-4">
-                                    <img
-                                        src="{{ $product->base_image_url ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=500&fit=crop' }}"
-                                        alt="{{ $product->name }}"
-                                        class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                                    >
+            @case (\Webkul\Theme\Enums\SectionTypeEnum::CATEGORY_CAROUSEL->value)
+                <section class="max-w-7xl mx-auto px-6 py-24">
+                    <h2 class="text-3xl font-display text-center mb-12">
+                        {{ $data['title'] ?? 'Shop by Category' }}
+                    </h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        @foreach ($data['categories'] ?? [] as $category)
+                            <a href="{{ $category['url'] ?? '#' }}" class="group relative block overflow-hidden rounded-lg">
+                                <img
+                                    src="{{ $category['image'] ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop' }}"
+                                    alt="{{ $category['name'] ?? '' }}"
+                                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
+                                >
+                                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
+                                    <span class="text-cream text-lg font-display">{{ $category['name'] ?? '' }}</span>
                                 </div>
-                                <h3 class="text-sm font-medium text-charcoal group-hover:text-sage transition">
-                                    {{ $product->name }}
-                                </h3>
-                                <p class="text-sm text-charcoal/60 mt-1">
-                                    {{ core()->formatPrice($product->price) }}
-                                </p>
                             </a>
                         @endforeach
                     </div>
+                </section>
+                @break
 
-                    {{-- Pagination --}}
-                    <div class="mt-12">
-                        {{ $products->links() }}
+            @case (\Webkul\Theme\Enums\SectionTypeEnum::PRODUCT_CAROUSEL->value)
+                <section class="max-w-7xl mx-auto px-6 py-24">
+                    <h2 class="text-3xl font-display text-center mb-12">
+                        {{ $data['title'] ?? 'Featured Products' }}
+                    </h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        @foreach ($data['products'] ?? [] as $product)
+                            <a href="{{ $product['url'] ?? '#' }}" class="group">
+                                <img
+                                    src="{{ $product['image'] ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=500&fit=crop' }}"
+                                    alt="{{ $product['name'] ?? '' }}"
+                                    class="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition duration-500 mb-4"
+                                >
+                                <h3 class="text-sm font-medium">{{ $product['name'] ?? '' }}</h3>
+                                <p class="text-sm text-charcoal/60">{{ $product['price'] ?? '' }}</p>
+                            </a>
+                        @endforeach
                     </div>
-                @else
-                    <div class="text-center py-16">
-                        <p class="text-charcoal/60">No products found in this category.</p>
-                    </div>
-                @endif
+                </section>
+                @break
+
+            @case (\Webkul\Theme\Enums\SectionTypeEnum::STATIC_CONTENT->value)
+                <section class="max-w-7xl mx-auto px-6 py-24">
+                    {!! $data['html'] ?? '' !!}
+                </section>
+                @break
+
+            @case (\Webkul\Theme\Enums\SectionTypeEnum::FOOTER_LINKS->value)
+                {{-- El footer se renderiza en el layout, no aquí --}}
+                @break
+        @endswitch
+
+        @if ($marks)
             </div>
-        </div>
-    </section>
+        @endif
+    @endforeach
+
+    @if ($preview ?? false)
+        @include('shop::home.preview-bridge')
+    @endif
 @endsection

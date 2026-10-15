@@ -1,6 +1,7 @@
 <?php
 
 use Webkul\Theme\Enums\SectionTypeEnum;
+use Webkul\NativeHouse\Sections\HeroBanner;
 
 return [
 
@@ -197,12 +198,8 @@ return [
             ],
             'customize' => [
                 'sections' => [
-                    SectionTypeEnum::IMAGE_CAROUSEL,
-                    SectionTypeEnum::PRODUCT_CAROUSEL,
-                    SectionTypeEnum::CATEGORY_CAROUSEL,
-                    SectionTypeEnum::FOOTER_LINKS,
-                    SectionTypeEnum::STATIC_CONTENT,
-                    SectionTypeEnum::SERVICES_CONTENT,
+                    \Webkul\NativeHouse\Sections\HeroBanner::class,
+                    ...SectionTypeEnum::cases(),
                 ],
             ],
         ],
