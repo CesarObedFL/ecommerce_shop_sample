@@ -1,89 +1,172 @@
-@extends('native-house::components.layouts.base')
-
-@section('title', __('native-house::app.brand.name'))
+@extends('shop::components.layouts.base')
 
 @section('content')
-    {{-- Hero --}}
-    <section class="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
-        <img
-            src="https://plus.unsplash.com/premium_photo-1661876380847-be2a1fae414e?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-            alt="furniture"
-            class="absolute inset-0 w-full h-full object-cover"
-        >
-        <div class="absolute inset-0 bg-charcoal/40"></div>
+    @foreach ($sections as $section)
+        @php ($data = $section->options) @endphp
 
-        <div class="relative z-10 text-center text-cream max-w-3xl px-6">
-            <h1 class="text-5xl md:text-6xl font-display mb-6">
-                {{ __('native-house::app.home.hero_title') }}
-            </h1>
-            <p class="text-lg md:text-xl mb-8">
-                {{ __('native-house::app.home.hero_subtitle') }}
-            </p>
-            <a
-                href="#"
-                class="inline-block bg-sage text-cream px-8 py-3 rounded-full text-sm uppercase tracking-wider hover:bg-terracotta transition"
-            >
-                {{ __('native-house::app.home.hero_cta') }}
-            </a>
-        </div>
-    </section>
+        @switch ($section->type)
+            @case ('hero_banner')
+                @foreach ($data['slides'] ?? [] as $slide)
+                    @php ($urls = bagisto_theme_storage()->imageUrls($slide['image'] ?? null))
+                    <section class="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
+                        <img src="{{ $urls['srcset']['large'] ?? $urls['url'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="relative z-10 text-center text-cream">
+                            <h1 class="text-5xl font-display">{{ $slide['heading'] ?? '' }}</h1>
+                            <a href="{{ $slide['link'] ?? '#' }}" class="btn">Explore</a>
+                        </div>
+                    </section>
+                @endforeach
+                @break
 
-    {{-- Featured Categories --}}
-    <section class="max-w-7xl mx-auto px-6 py-24">
-        <h2 class="text-3xl font-display text-center mb-12">
-            Shop by Category
-        </h2>
+            @case (\Webkul\Theme\Enums\SectionTypeEnum::CATEGORY_CAROUSEL->value)
+                <v-categories-carousel
+                    src="{{ $src }}"
+                    title="{{ $title }}"
+                    navigation-link="{{ $navigationLink ?? '' }}"
+                >
+                    <x-shop::shimmer.categories.carousel
+                        :count="8"
+                        :navigation-link="$navigationLink ?? false"
+                    />
+                </v-categories-carousel>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                @pushOnce('scripts')
+                    <script
+                        type="text/x-template"
+                        id="v-categories-carousel-template"
+                    >
+                        <div
+                            class="container mt-14 max-lg:px-8 max-md:mt-7 max-md:px-0! max-sm:mt-5"
+                            v-if="! isLoading && categories?.length"
+                        >
+                            <div class="relative">
+                                <div
+                                    ref="swiperContainer"
+                                    class="scrollbar-hide flex gap-10 overflow-auto scroll-smooth max-lg:gap-4"
+                                >
+                                    <div
+                                        class="grid min-w-30 max-w-30 grid-cols-1 justify-items-center gap-4 font-medium max-md:min-w-20 max-md:max-w-20 max-md:gap-2.5 max-md:first:ml-4 max-sm:min-w-15 max-sm:max-w-15 max-sm:gap-1.5"
+                                        v-for="category in categories"
+                                    >
+                                        <a
+                                            :href="category.slug"
+                                            class="h-27.5 w-27.5 rounded-full bg-zinc-100 max-md:h-20 max-md:w-20 max-sm:h-15 max-sm:w-15"
+                                            :aria-label="category.name"
+                                        >
+                                            <x-shop::media.images.lazy
+                                                ::src="category.logo?.small_image_url || fallback"
+                                                ::srcset="`
+                                                    ${(category.logo?.small_image_url || fallback)} 60w,
+                                                    ${(category.logo?.medium_image_url || fallback)} 110w,
+                                                    ${(category.logo?.large_image_url || fallback)} 300w
+                                                `"
+                                                sizes="(max-width: 640px) 60px, 110px"
+                                                width="110"
+                                                height="110"
+                                                class="w-full rounded-full max-sm:h-15 max-sm:w-15"
+                                                ::alt="category.name"
+                                            />
+                                        </a>
 
-            <a href="furniture" class="group relative block overflow-hidden rounded-lg">
-                <img
-                    src="https://images.unsplash.com/photo-1599696848652-f0ff23bc911f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-                    alt="furniture"
-                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                >
-                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
-                    <span class="text-cream text-lg font-display">
-                        {{ __('native-house::app.categories.' . 'furniture') }}
-                    </span>
-                </div>
-            </a>
-            <a href="#" class="group relative block overflow-hidden rounded-lg">
-                <img
-                    src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-                    alt="lighting"
-                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                >
-                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
-                    <span class="text-cream text-lg font-display">
-                        {{ __('native-house::app.categories.' . 'lighting') }}
-                    </span>
-                </div>
-            </a>
-            <a href="#" class="group relative block overflow-hidden rounded-lg">
-                <img
-                    src="https://images.unsplash.com/photo-1640747669771-b82a6e40f534?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-                    alt="textiles"
-                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                >
-                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
-                    <span class="text-cream text-lg font-display">
-                        {{ __('native-house::app.categories.' . 'textiles') }}
-                    </span>
-                </div>
-            </a>
-            <a href="#" class="group relative block overflow-hidden rounded-lg">
-                <img
-                    src="https://images.unsplash.com/photo-1584589167171-541ce45f1eea?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-                    alt="plants"
-                    class="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                >
-                <div class="absolute inset-0 bg-charcoal/30 flex items-end p-6">
-                    <span class="text-cream text-lg font-display">
-                        {{ __('native-house::app.categories.' . 'plants') }}
-                    </span>
-                </div>
-            </a>
-        </div>
-    </section>
+                                        <a
+                                            :href="category.slug"
+                                            class=""
+                                        >
+                                            <p
+                                                class="text-center text-lg text-black max-md:text-base max-md:font-normal max-sm:text-sm"
+                                                v-text="category.name"
+                                            >
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="icon-arrow-left-stylish absolute -left-10 top-9 flex h-12.5 w-12.5 cursor-pointer items-center justify-center rounded-full border border-black bg-white text-2xl transition hover:bg-black hover:text-white max-lg:-left-7 max-md:hidden"
+                                    aria-label="@lang('shop::app.components.carousel.previous')"
+                                    @click="swipeLeft"
+                                >
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="icon-arrow-right-stylish absolute -right-6 top-9 flex h-12.5 w-12.5 cursor-pointer items-center justify-center rounded-full border border-black bg-white text-2xl transition hover:bg-black hover:text-white max-lg:-right-7 max-md:hidden"
+                                    aria-label="@lang('shop::app.components.carousel.next')"
+                                    @click="swipeRight"
+                                >
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Category Carousel Shimmer -->
+                        <template v-if="isLoading">
+                            <x-shop::shimmer.categories.carousel
+                                :count="8"
+                                :navigation-link="$navigationLink ?? false"
+                            />
+                        </template>
+                    </script>
+
+                    <script type="module">
+                        app.component('v-categories-carousel', {
+                            template: '#v-categories-carousel-template',
+
+                            props: [
+                                'src',
+                                'title',
+                                'navigationLink',
+                            ],
+
+                            data() {
+                                return {
+                                    isLoading: true,
+
+                                    categories: [],
+
+                                    offset: 323,
+
+                                    fallback: "{{ product_image()->getPlaceholderUrl('small') }}"
+                                };
+                            },
+
+                            mounted() {
+                                this.getCategories();
+                            },
+
+                            methods: {
+                                getCategories() {
+                                    this.$axios.get(this.src)
+                                        .then(response => {
+                                            this.isLoading = false;
+
+                                            this.categories = response.data.data;
+                                        }).catch(error => {
+                                            console.log(error);
+                                        });
+                                },
+
+                                swipeLeft() {
+                                    const container = this.$refs.swiperContainer;
+
+                                    container.scrollLeft -= this.offset;
+                                },
+
+                                swipeRight() {
+                                    const container = this.$refs.swiperContainer;
+
+                                    container.scrollLeft += this.offset;
+                                },
+                            },
+                        });
+                    </script>
+                @endPushOnce
+                @break
+
+        @endswitch
+    @endforeach
+
+    @if ($preview ?? false)
+        @include('shop::home.preview-bridge')
+    @endif
 @endsection

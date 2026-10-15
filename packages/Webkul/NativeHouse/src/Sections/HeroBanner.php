@@ -15,14 +15,36 @@ class HeroBanner extends SectionType
     {
         return [
             [
-                'key' => 'slides',
-                'type' => SectionSchema::REPEATER,
-                'label' => trans('native-house::app.sections.slides'),
+                'key'       => 'slides',
+                'type'      => SectionSchema::REPEATER,
+                'label'     => trans('native-house::app.sections.slides'),
                 'add_label' => trans('native-house::app.sections.add-slide'),
-                'fields' => [
-                    ['key' => 'image', 'type' => SectionSchema::IMAGE, 'label' => trans('native-house::app.sections.image')],
-                    ['key' => 'heading', 'type' => SectionSchema::TEXT, 'label' => trans('native-house::app.sections.heading')],
-                    ['key' => 'link', 'type' => SectionSchema::TEXT, 'label' => $this->label('link')],
+                'fields'    => [
+                    [
+                        'key'   => 'image',
+                        'type'  => SectionSchema::IMAGE,
+                        'label' => trans('native-house::app.sections.image'),
+                    ],
+                    [
+                        'key'   => 'heading',
+                        'type'  => SectionSchema::TEXT,
+                        'label' => trans('native-house::app.sections.heading'),
+                    ],
+                    [
+                        'key'   => 'subheading',
+                        'type'  => SectionSchema::TEXT,
+                        'label' => trans('native-house::app.sections.subheading'),
+                    ],
+                    [
+                        'key'   => 'link',
+                        'type'  => SectionSchema::TEXT,
+                        'label' => $this->label('link'),
+                    ],
+                    [
+                        'key'   => 'button_text',
+                        'type'  => SectionSchema::TEXT,
+                        'label' => trans('native-house::app.sections.button-text'),
+                    ],
                 ],
             ],
         ];
