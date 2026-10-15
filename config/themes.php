@@ -195,6 +195,16 @@ return [
                 'build_directory'          => 'themes/native-house/build',
                 'package_assets_directory' => 'src/Resources/assets',
             ],
+            'customize' => [
+                'sections' => [
+                    SectionTypeEnum::IMAGE_CAROUSEL,
+                    SectionTypeEnum::PRODUCT_CAROUSEL,
+                    SectionTypeEnum::CATEGORY_CAROUSEL,
+                    SectionTypeEnum::FOOTER_LINKS,
+                    SectionTypeEnum::STATIC_CONTENT,
+                    SectionTypeEnum::SERVICES_CONTENT,
+                ],
+            ],
         ],
     ],
 
