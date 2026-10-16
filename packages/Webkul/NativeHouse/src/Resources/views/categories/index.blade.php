@@ -90,7 +90,7 @@
                                     <div class="m-auto grid w-full place-content-center items-center justify-items-center py-32 text-center">
                                         <img
                                             class="max-md:h-25 max-md:w-25"
-                                            src="{{ bagisto_asset('images/thank-you.png') }}"
+                                            src="{{ bagisto_asset('images/thank-you.png', 'shop') }}"
                                             alt="@lang('shop::app.categories.view.empty')"
                                             loading="lazy"
                                             decoding="async"
@@ -139,7 +139,7 @@
                                     <div class="m-auto grid w-full place-content-center items-center justify-items-center py-32 text-center">
                                         <img
                                             class="max-md:h-25 max-md:w-25"
-                                            src="{{ bagisto_asset('images/thank-you.png') }}"
+                                            src="{{ bagisto_asset('images/thank-you.png', 'shop') }}"
                                             alt="@lang('shop::app.categories.view.empty')"
                                             loading="lazy"
                                             decoding="async"
@@ -176,7 +176,7 @@
                             <!-- Spinner -->
                             <img
                                 class="h-5 w-5 animate-spin text-navyBlue"
-                                src="{{ bagisto_asset('images/spinner.svg') }}"
+                                src="{{ bagisto_asset('images/spinner.svg', 'shop') }}"
                                 alt="Loading"
                             />
                         </button>

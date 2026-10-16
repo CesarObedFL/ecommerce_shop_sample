@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import vue from "@vitejs/plugin-vue";
 import laravel from "laravel-vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
@@ -9,18 +10,34 @@ export default defineConfig(({ mode }) => {
     Object.assign(process.env, loadEnv(mode, envDir));
 
     return {
-        root: __dirname,
         build: {
             emptyOutDir: true,
-            manifest: 'manifest.json',
+            minify: "esbuild",
+            cssCodeSplit: true,
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        vue: ["vue"],
+                        veeValidate: ["vee-validate", "@vee-validate/rules", "@vee-validate/i18n"],
+                        vendor: ["axios", "mitt"]
+                    }
+                }
+            }
         },
+
+        envDir,
+
         server: {
             host: process.env.VITE_HOST || "localhost",
             port: process.env.VITE_PORT || 5173,
             cors: true,
         },
+
         plugins: [
+            vue(),
+
             tailwindcss(),
+
             laravel({
                 hotFile: "../../../public/native-house-vite.hot",
                 publicDirectory: "../../../public",
@@ -29,15 +46,17 @@ export default defineConfig(({ mode }) => {
                     "src/Resources/assets/css/app.css",
                     "src/Resources/assets/js/app.js",
                 ],
-                refresh: ["src/Resources/views/**"],
-                experimental: {
-                    renderBuiltUrl(filename, { hostId, hostType, type }) {
-                        if (hostType === "css") {
-                            return path.basename(filename);
-                        }
-                    },
-                },
+                refresh: true,
+                preload: false,
             }),
         ],
+
+        experimental: {
+            renderBuiltUrl(filename, { hostId, hostType, type }) {
+                if (hostType === "css") {
+                    return path.basename(filename);
+                }
+            },
+        },
     };
 });

@@ -191,6 +191,7 @@ return [
         ],
         'native-house' => [
             'name'        => 'Casa Nativa',
+            'parent' => 'default',
             'views_namespace' => 'native-house',
             'assets_path' => 'public/themes/native-house',
             'views_path'  => 'packages/Webkul/NativeHouse/src/Resources/views',
