@@ -37,9 +37,19 @@
         </div>
     </div>
 
-    <div class="border-t border-charcoal/50">
-        <div class="max-w-7xl mx-auto px-6 py-4 text-xs text-sand text-center">
-            &copy; {{ date('Y') }} {{ __('native-house::app.brand.name') }}. By César Obed Figueroa Luna.
+    <!-- Copyright -->
+    <div class="native-footer__bottom">
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-center sm:flex-row sm:text-left lg:px-8">
+            <p class="native-footer__copyright text-xs">
+                &copy; {{ date('Y') }}
+                {{ __('native-house::app.brand.name') }}.
+                Todos los derechos reservados.
+            </p>
+
+            <p class="native-footer__signature text-xs">
+                Diseño y desarrollo por
+                <span>César Obed Figueroa Luna</span>
+            </p>
         </div>
     </div>
 </footer>

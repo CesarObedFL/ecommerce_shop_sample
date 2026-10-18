@@ -11,24 +11,24 @@
      * Ordered largest to smallest so the `max-*` utilities read in the same direction
      * as the screens they apply to.
      */
-    --breakpoint-2xl:  1440px;
-    --breakpoint-xl:   1240px;
+    --breakpoint-2xl: 1440px;
+    --breakpoint-xl: 1240px;
     --breakpoint-1180: 1180px;
     --breakpoint-1060: 1060px;
-    --breakpoint-lg:   1024px;
-    --breakpoint-991:  991px;
-    --breakpoint-868:  868px;
-    --breakpoint-md:   768px;
-    --breakpoint-sm:   525px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-991: 991px;
+    --breakpoint-868: 868px;
+    --breakpoint-md: 768px;
+    --breakpoint-sm: 525px;
 
     /**
      * Colours — the palette of named colours used in the storefront.
      */
-    --color-navyBlue:    #060C3B;
+    --color-navyBlue: #060C3B;
     --color-lightOrange: #F6F2EB;
-    --color-darkGreen:   #40994A;
-    --color-darkBlue:    #0044F2;
-    --color-darkPink:    #F85156;
+    --color-darkGreen: #40994A;
+    --color-darkBlue: #0044F2;
+    --color-darkPink: #F85156;
 
     /**
      * Fonts — the named families the storefront can ask for by utility.
@@ -68,65 +68,68 @@
  * automatically.
  */
 @source inline("{icon-dollar-sign,icon-product,icon-share,icon-support,icon-truck}");
+
 @theme {
-    --icon-uncheck:                "\e941";
-    --icon-check-box:              "\e90f";
-    --icon-radio-unselect:         "\e931";
-    --icon-radio-select:           "\e930";
-    --icon-gdpr-safe:              "\e84f";
-    --icon-checkout-address:       "\e944";
-    --icon-edit:                   "\e943";
-    --icon-arrow-down:             "\e901";
-    --icon-arrow-left-stylish:     "\e902";
-    --icon-arrow-left:             "\e903";
-    --icon-arrow-right-stylish:    "\e904";
-    --icon-arrow-right:            "\e905";
-    --icon-arrow-up:               "\e906";
-    --icon-bin:                    "\e908";
-    --icon-calendar:               "\e90a";
-    --icon-camera:                 "\e90c";
-    --icon-cancel:                 "\e90d";
-    --icon-cart:                   "\e90e";
-    --icon-swap:                   "\e910";
-    --icon-compare:                "\e911";
-    --icon-dollar-sign:            "\e913";
-    --icon-double-arrow:           "\e914";
-    --icon-download:               "\e915";
-    --icon-error:                  "\e917";
-    --icon-eye:                    "\e918";
-    --icon-funnel:                 "\e919";
-    --icon-filter:                 "\e91b";
-    --icon-flate-rate:             "\e91c";
-    --icon-grid-view-fill:         "\e91e";
-    --icon-grid-view:              "\e91f";
-    --icon-hamburger:              "\e920";
-    --icon-heart-fill:             "\e923";
-    --icon-heart:                  "\e924";
-    --icon-listing-fill:           "\e927";
-    --icon-listing:                "\e928";
-    --icon-location:               "\e929";
-    --icon-minus:                  "\e92a";
-    --icon-more:                   "\e92b";
-    --icon-orders:                 "\e92c";
-    --icon-pen:                    "\e92d";
-    --icon-plus:                   "\e92e";
-    --icon-product:                "\e92f";
-    --icon-search:                 "\e933";
-    --icon-share:                  "\e934";
-    --icon-sort:                   "\e935";
-    --icon-star-fill:              "\e938";
-    --icon-star:                   "\e939";
-    --icon-support:                "\e93a";
-    --icon-toast-done:             "\e93c";
-    --icon-toast-error:            "\e93d";
+    --icon-uncheck: "\e941";
+    --icon-check-box: "\e90f";
+    --icon-radio-unselect: "\e931";
+    --icon-radio-select: "\e930";
+    --icon-gdpr-safe: "\e84f";
+    --icon-checkout-address: "\e944";
+    --icon-edit: "\e943";
+    --icon-arrow-down: "\e901";
+    --icon-arrow-left-stylish: "\e902";
+    --icon-arrow-left: "\e903";
+    --icon-arrow-right-stylish: "\e904";
+    --icon-arrow-right: "\e905";
+    --icon-arrow-up: "\e906";
+    --icon-bin: "\e908";
+    --icon-calendar: "\e90a";
+    --icon-camera: "\e90c";
+    --icon-cancel: "\e90d";
+    --icon-cart: "\e90e";
+    --icon-swap: "\e910";
+    --icon-compare: "\e911";
+    --icon-dollar-sign: "\e913";
+    --icon-double-arrow: "\e914";
+    --icon-download: "\e915";
+    --icon-error: "\e917";
+    --icon-eye: "\e918";
+    --icon-funnel: "\e919";
+    --icon-filter: "\e91b";
+    --icon-flate-rate: "\e91c";
+    --icon-grid-view-fill: "\e91e";
+    --icon-grid-view: "\e91f";
+    --icon-hamburger: "\e920";
+    --icon-heart-fill: "\e923";
+    --icon-heart: "\e924";
+    --icon-listing-fill: "\e927";
+    --icon-listing: "\e928";
+    --icon-location: "\e929";
+    --icon-minus: "\e92a";
+    --icon-more: "\e92b";
+    --icon-orders: "\e92c";
+    --icon-pen: "\e92d";
+    --icon-plus: "\e92e";
+    --icon-product: "\e92f";
+    --icon-search: "\e933";
+    --icon-share: "\e934";
+    --icon-sort: "\e935";
+    --icon-star-fill: "\e938";
+    --icon-star: "\e939";
+    --icon-support: "\e93a";
+    --icon-toast-done: "\e93c";
+    --icon-toast-error: "\e93d";
     --icon-toast-exclamation-mark: "\e93e";
-    --icon-toast-info:             "\e93f";
-    --icon-truck:                  "\e940";
-    --icon-users:                  "\e942";
+    --icon-toast-info: "\e93f";
+    --icon-truck: "\e940";
+    --icon-users: "\e942";
 }
 
 @utility icon-* {
-    &::before { content: --value(--icon-*); }
+    &::before {
+        content: --value(--icon-*);
+    }
 }
 
 /**
@@ -136,6 +139,7 @@
  * still relies on — the grey border, the pointer on buttons, the grey placeholder.
  */
 @layer base {
+
     *,
     ::after,
     ::before,
@@ -323,13 +327,23 @@
     }
 
     @keyframes skeleton {
-        0%   { background-position: -1250px 0; }
-        100% { background-position:  1250px 0; }
+        0% {
+            background-position: -1250px 0;
+        }
+
+        100% {
+            background-position: 1250px 0;
+        }
     }
 
     @keyframes on-fade {
-        0%   { opacity: 0; }
-        100% { opacity: 1; }
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 
     .wrapper-404 {
@@ -384,5 +398,114 @@
 
     .skip-to-main-content-link:focus {
         @apply ltr:left-1/2 rtl:right-1/2 ltr:translate-x-1/2 rtl:translate-x-[-50%] opacity-100;
+    }
+}
+
+
+
+
+
+
+/* =========================================
+   NativeHouse — Footer
+   ========================================= */
+
+.native-footer {
+    --footer-bg: #252722;
+    --footer-bg-bottom: #1e201c;
+    --footer-text: #f5f1e8;
+    --footer-muted: #c6c0b2;
+    --footer-accent: #b59a70;
+    --footer-divider: rgb(245 241 232 / 14%);
+
+    color: var(--footer-text);
+    background-color: var(--footer-bg);
+}
+
+.native-footer__main {
+    background-color: var(--footer-bg);
+}
+
+.native-footer__brand {
+    color: var(--footer-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 0.035em;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color 180ms ease;
+}
+
+.native-footer__brand:hover {
+    color: var(--footer-accent);
+}
+
+.native-footer__tagline,
+.native-footer__text {
+    color: var(--footer-muted);
+}
+
+.native-footer__heading {
+    margin: 0;
+    color: var(--footer-text);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.native-footer__links {
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.native-footer__links a {
+    color: var(--footer-muted);
+    font-size: 0.875rem;
+    line-height: 1.8;
+    text-decoration: none;
+    transition:
+        color 180ms ease,
+        padding-left 180ms ease;
+}
+
+.native-footer__links a:hover {
+    padding-left: 3px;
+    color: var(--footer-accent);
+}
+
+.native-footer__ornament {
+    width: 48px;
+    height: 1px;
+    background-color: var(--footer-accent);
+}
+
+.native-footer__bottom {
+    border-top: 1px solid var(--footer-divider);
+    background-color: var(--footer-bg-bottom);
+}
+
+.native-footer__copyright {
+    margin: 0;
+    color: var(--footer-muted);
+}
+
+.native-footer__signature {
+    margin: 0;
+    color: var(--footer-muted);
+}
+
+.native-footer__signature span {
+    color: var(--footer-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .native-footer__brand,
+    .native-footer__links a {
+        transition: none;
     }
 }
