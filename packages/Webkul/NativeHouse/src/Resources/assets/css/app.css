@@ -402,7 +402,203 @@
 }
 
 
+/* =========================================
+   NativeHouse — Header
+   ========================================= */
 
+.native-header {
+    --header-ivory: #F5F1E8;
+    --header-charcoal: #252722;
+    --header-walnut: #65452F;
+    --header-brass: #B59A70;
+    --header-muted: #777367;
+    --header-border: #DED7CA;
+
+    color: var(--header-charcoal);
+    background: var(--header-ivory);
+}
+
+.native-header__top {
+    padding: 9px 16px;
+    color: var(--header-ivory);
+    background: var(--header-charcoal);
+    text-align: center;
+}
+
+.native-header__top p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.native-header__main {
+    background: var(--header-ivory);
+}
+
+.native-header__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+    color: var(--header-charcoal);
+    text-decoration: none;
+}
+
+.native-header__brand-name {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    font-weight: 500;
+    letter-spacing: 0.045em;
+    line-height: 1.15;
+}
+
+.native-header__brand-tagline {
+    color: var(--header-walnut);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.native-header__search {
+    width: min(100%, 350px);
+    align-items: center;
+    border-bottom: 1px solid var(--header-border);
+}
+
+.native-header__search input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 4px;
+    border: 0;
+    outline: none;
+    color: var(--header-charcoal);
+    background: transparent;
+    font-size: 13px;
+}
+
+.native-header__search input:focus {
+    border-bottom: 1px solid var(--header-brass);
+}
+
+.native-header__search input::placeholder {
+    color: var(--header-muted);
+}
+
+.native-header__search button {
+    padding: 8px;
+    border: 0;
+    color: var(--header-charcoal);
+    background: transparent;
+    cursor: pointer;
+}
+
+.native-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.native-header__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--header-charcoal);
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 180ms ease;
+}
+
+.native-header__action:hover {
+    color: var(--header-walnut);
+}
+
+.native-header__nav {
+    border-top: 1px solid var(--header-border);
+    border-bottom: 1px solid var(--header-border);
+    background: var(--header-ivory);
+}
+
+.native-header__nav>div {
+    min-height: 48px;
+    flex-wrap: wrap;
+    row-gap: 0;
+}
+
+.native-header__nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--header-charcoal);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.native-header__nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--header-brass);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 180ms ease;
+}
+
+.native-header__nav a:hover {
+    color: var(--header-walnut);
+}
+
+.native-header__nav a:hover::after {
+    transform: scaleX(1);
+}
+
+@media (max-width: 767px) {
+    .native-header__top p {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+    }
+
+    .native-header__main>div {
+        flex-wrap: wrap;
+    }
+
+    .native-header__brand-tagline {
+        font-size: 8px;
+        letter-spacing: 0.1em;
+    }
+
+    .native-header__actions {
+        gap: 14px;
+    }
+
+    .native-header__nav>div {
+        justify-content: center;
+        gap: 24px;
+    }
+
+    .native-header__nav a {
+        font-size: 10px;
+        letter-spacing: 0.08em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .native-header__action,
+    .native-header__nav a,
+    .native-header__nav a::after {
+        transition: none;
+    }
+}
 
 
 
