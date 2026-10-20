@@ -601,6 +601,245 @@
 }
 
 
+/* =========================================
+   NativeHouse — Home
+   ========================================= */
+
+.native-home__hero {
+    position: relative;
+    display: flex;
+    min-height: 560px;
+    height: min(76vh, 780px);
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    background: #252722;
+    color: #f5f1e8;
+}
+
+.native-home__hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.native-home__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            rgb(24 25 21 / 78%) 0%,
+            rgb(24 25 21 / 55%) 42%,
+            rgb(24 25 21 / 10%) 100%);
+}
+
+.native-home__hero-content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 780px);
+    padding: 70px clamp(24px, 8vw, 120px);
+}
+
+.native-home__eyebrow {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #d4bb91;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+.native-home__hero-content h1 {
+    margin: 0;
+    color: #f5f1e8;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.8rem, 5.5vw, 5.3rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.native-home__hero-content p {
+    max-width: 450px;
+    margin: 24px 0 32px;
+    color: rgb(245 241 232 / 86%);
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.native-home__hero-button {
+    display: inline-flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 24px;
+    border: 1px solid #b59a70;
+    background: #b59a70;
+    color: #252722;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 180ms ease, color 180ms ease;
+}
+
+.native-home__hero-button:hover {
+    background: transparent;
+    color: #f5f1e8;
+}
+
+.native-home__hero-index {
+    position: absolute;
+    right: 28px;
+    bottom: 24px;
+    z-index: 1;
+    color: rgb(245 241 232 / 80%);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+}
+
+.native-home__hero-index span {
+    padding: 0 6px;
+    color: #d4bb91;
+}
+
+.native-home__categories {
+    margin-top: 80px;
+    margin-bottom: 72px;
+}
+
+.native-home__section-heading {
+    margin-bottom: 36px;
+    text-align: center;
+}
+
+.native-home__section-heading>span {
+    color: #8b7657;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+}
+
+.native-home__section-heading h2 {
+    margin: 12px 0 10px;
+    color: #252722;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.native-home__section-heading p {
+    margin: 0;
+    color: #777367;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* Category presentation */
+.native-home__categories .scrollbar-hide {
+    gap: 24px;
+}
+
+.native-home__categories .scrollbar-hide>div {
+    min-width: 150px;
+    max-width: 180px;
+    gap: 12px;
+}
+
+.native-home__categories .scrollbar-hide>div>a:first-child {
+    display: block;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #e9e3d8;
+}
+
+.native-home__categories .scrollbar-hide>div>a:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+}
+
+.native-home__categories .scrollbar-hide>div>a:first-child:hover img {
+    transform: scale(1.05);
+}
+
+.native-home__categories .scrollbar-hide>div>a:last-child p {
+    color: #252722;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+}
+
+@media (max-width: 767px) {
+    .native-home__hero {
+        min-height: 490px;
+        height: 68vh;
+    }
+
+    .native-home__hero-overlay {
+        background: linear-gradient(90deg,
+                rgb(24 25 21 / 76%),
+                rgb(24 25 21 / 35%));
+    }
+
+    .native-home__hero-content {
+        padding: 48px 26px;
+    }
+
+    .native-home__hero-content h1 {
+        font-size: clamp(2.6rem, 11vw, 4rem);
+    }
+
+    .native-home__hero-content p {
+        font-size: 13px;
+    }
+
+    .native-home__hero-index {
+        right: 16px;
+        bottom: 16px;
+        font-size: 8px;
+    }
+
+    .native-home__categories {
+        margin-top: 52px;
+        margin-bottom: 48px;
+    }
+
+    .native-home__section-heading {
+        padding: 0 18px;
+        margin-bottom: 26px;
+    }
+
+    .native-home__categories .scrollbar-hide {
+        gap: 14px;
+    }
+
+    .native-home__categories .scrollbar-hide>div {
+        min-width: 120px;
+        max-width: 120px;
+    }
+
+    .native-home__categories .scrollbar-hide>div>a:first-child {
+        height: 145px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .native-home__hero-button,
+    .native-home__categories .scrollbar-hide img {
+        transition: none;
+    }
+}
+
 
 /* =========================================
    NativeHouse — Footer

@@ -5,25 +5,58 @@
         @php ($data = $section->options) @endphp
 
         @switch ($section->type)
+            
             @case ('hero_banner')
-                @foreach ($data['slides'] ?? [] as $slide)
-                    @php ($urls = bagisto_theme_storage()->imageUrls($slide['image'] ?? null))
-                    <section class="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
-                        <img src="{{ $urls['srcset']['large'] ?? $urls['url'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="relative z-10 text-center text-cream">
-                            <h1 class="text-5xl font-display">{{ $slide['heading'] ?? '' }}</h1>
-                            <a href="{{ $slide['link'] ?? '#' }}" class="btn">Explore</a>
-                        </div>
-                    </section>
-                @endforeach
+                @if (! empty($data['slides']))
+                    @foreach ($data['slides'] as $slide)
+                        @php
+                            $urls = bagisto_theme_storage()->imageUrls($slide['image'] ?? null);
+                            $image = $urls['srcset']['large'] ?? $urls['url'] ?? '';
+                        @endphp
+
+                        <section class="native-home__hero">
+                            @if ($image)
+                                <img src="{{ $image }}"
+                                    alt="{{ $slide['heading'] ?? 'Colección de muebles Casa Nativa' }}"
+                                    class="native-home__hero-image">
+                            @endif
+
+                            <div class="native-home__hero-overlay"></div>
+
+                            <div class="native-home__hero-content">
+                                <span class="native-home__eyebrow">
+                                    Diseño para vivir mejor
+                                </span>
+
+                                <h1>
+                                    {{ $slide['heading'] ?? 'Espacios con personalidad' }}
+                                </h1>
+
+                                <p>
+                                    Piezas cuidadosamente seleccionadas para crear
+                                    espacios cálidos, elegantes y atemporales.
+                                </p>
+
+                                <a href="{{ $slide['link'] ?? url('/furniture') }}" class="native-home__hero-button">
+                                    Descubrir colección
+                                    <span aria-hidden="true">→</span>
+                                </a>
+                            </div>
+
+                            <div class="native-home__hero-index">
+                                CASA NATIVA <span>·</span> DISEÑO ATEMPORAL
+                            </div>
+                        </section>
+                    @endforeach
+                @endif
                 @break
+
 
             @case (\Webkul\Theme\Enums\SectionTypeEnum::CATEGORY_CAROUSEL->value)
                 <v-categories-carousel
                     src="{{ $src }}"
                     title="{{ $title }}"
-                    navigation-link="{{ $navigationLink ?? '' }}"
-                >
+                    navigation-link="{{ $navigationLink ?? '' }}">
                     <x-shop::shimmer.categories.carousel
                         :count="8"
                         :navigation-link="$navigationLink ?? false"
@@ -31,28 +64,26 @@
                 </v-categories-carousel>
 
                 @pushOnce('scripts')
-                    <script
-                        type="text/x-template"
-                        id="v-categories-carousel-template"
-                    >
-                        <div
-                            class="container mt-14 max-lg:px-8 max-md:mt-7 max-md:px-0! max-sm:mt-5"
-                            v-if="! isLoading && categories?.length"
-                        >
+                    <script type="text/x-template"
+                        id="v-categories-carousel-template">
+                        <div class="native-home__categories container mt-14 max-lg:px-8 max-md:mt-7 max-md:px-0! max-sm:mt-5"
+                            v-if="! isLoading && categories?.length">
+                            <div class="native-home__section-heading">
+                                <span>EXPLORA NUESTRA SELECCIÓN</span>
+                                <h2 v-text="title || 'Encuentra tu estilo'"></h2>
+                                <p>Detalles que transforman cada espacio.</p>
+                            </div>
                             <div class="relative">
                                 <div
                                     ref="swiperContainer"
-                                    class="scrollbar-hide flex gap-10 overflow-auto scroll-smooth max-lg:gap-4"
-                                >
+                                    class="scrollbar-hide flex gap-10 overflow-auto scroll-smooth max-lg:gap-4">
                                     <div
                                         class="grid min-w-30 max-w-30 grid-cols-1 justify-items-center gap-4 font-medium max-md:min-w-20 max-md:max-w-20 max-md:gap-2.5 max-md:first:ml-4 max-sm:min-w-15 max-sm:max-w-15 max-sm:gap-1.5"
-                                        v-for="category in categories"
-                                    >
-                                        <a
+                                        v-for="category in categories">
+                                        <a 
                                             :href="category.slug"
                                             class="h-27.5 w-27.5 rounded-full bg-zinc-100 max-md:h-20 max-md:w-20 max-sm:h-15 max-sm:w-15"
-                                            :aria-label="category.name"
-                                        >
+                                            :aria-label="category.name">
                                             <x-shop::media.images.lazy
                                                 ::src="category.logo?.small_image_url || fallback"
                                                 ::srcset="`
@@ -68,14 +99,9 @@
                                             />
                                         </a>
 
-                                        <a
-                                            :href="category.slug"
-                                            class=""
-                                        >
-                                            <p
-                                                class="text-center text-lg text-black max-md:text-base max-md:font-normal max-sm:text-sm"
-                                                v-text="category.name"
-                                            >
+                                        <a :href="category.slug" class="">
+                                            <p class="text-center text-lg text-black max-md:text-base max-md:font-normal max-sm:text-sm"
+                                                v-text="category.name">
                                             </p>
                                         </a>
                                     </div>
@@ -85,16 +111,14 @@
                                     type="button"
                                     class="icon-arrow-left-stylish absolute -left-10 top-9 flex h-12.5 w-12.5 cursor-pointer items-center justify-center rounded-full border border-black bg-white text-2xl transition hover:bg-black hover:text-white max-lg:-left-7 max-md:hidden"
                                     aria-label="@lang('shop::app.components.carousel.previous')"
-                                    @click="swipeLeft"
-                                >
+                                    @click="swipeLeft">
                                 </button>
 
                                 <button
                                     type="button"
                                     class="icon-arrow-right-stylish absolute -right-6 top-9 flex h-12.5 w-12.5 cursor-pointer items-center justify-center rounded-full border border-black bg-white text-2xl transition hover:bg-black hover:text-white max-lg:-right-7 max-md:hidden"
                                     aria-label="@lang('shop::app.components.carousel.next')"
-                                    @click="swipeRight"
-                                >
+                                    @click="swipeRight">
                                 </button>
                             </div>
                         </div>
@@ -103,8 +127,7 @@
                         <template v-if="isLoading">
                             <x-shop::shimmer.categories.carousel
                                 :count="8"
-                                :navigation-link="$navigationLink ?? false"
-                            />
+                                :navigation-link="$navigationLink ?? false"/>
                         </template>
                     </script>
 
