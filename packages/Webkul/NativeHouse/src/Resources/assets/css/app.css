@@ -842,6 +842,137 @@
 
 
 /* =========================================
+   NativeHouse — Categories
+   ========================================= */
+
+.native-home__categories {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.native-home__section-heading {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.native-home__section-heading>span {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #8b795e;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+}
+
+.native-home__section-heading h2 {
+    margin: 0;
+    color: #252722;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.native-home__section-heading p {
+    margin-top: 0.9rem;
+    color: #77746c;
+    font-size: 0.95rem;
+}
+
+.native-home__category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.native-home__category-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #e9e3d8;
+    color: #fff;
+    text-decoration: none;
+}
+
+.native-home__category-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.native-home__category-card:hover img {
+    transform: scale(1.06);
+}
+
+.native-home__category-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: linear-gradient(to top,
+            rgb(25 25 22 / 72%) 0%,
+            rgb(25 25 22 / 15%) 48%,
+            transparent 75%);
+}
+
+.native-home__category-overlay>span:first-child {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.15rem, 1.8vw, 1.75rem);
+    line-height: 1.2;
+}
+
+.native-home__category-arrow {
+    flex-shrink: 0;
+    font-size: 1.35rem;
+    transition: transform 0.25s ease;
+}
+
+.native-home__category-card:hover .native-home__category-arrow {
+    transform: translate(3px, -3px);
+}
+
+.native-home__categories-loading {
+    min-height: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .native-home__category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .native-home__categories {
+        margin-top: 3.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .native-home__category-overlay {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .native-home__category-grid {
+        gap: 0.65rem;
+    }
+
+    .native-home__category-overlay {
+        padding: 0.75rem;
+    }
+
+    .native-home__category-overlay>span:first-child {
+        font-size: 1.05rem;
+    }
+}
+
+
+/* =========================================
    NativeHouse — Footer
    ========================================= */
 
