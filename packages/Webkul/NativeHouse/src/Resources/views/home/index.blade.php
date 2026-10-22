@@ -1,6 +1,9 @@
-@extends('shop::components.layouts.base')
+<x-shop::layouts>
+    <x-slot:title>
+        Casa Nativa | Muebles y decoración
+    </x-slot>
 
-@section('content')
+
     @foreach ($sections as $section)
         @php ($data = $section->options) @endphp
 
@@ -151,4 +154,6 @@
     @if ($preview ?? false)
         @include('shop::home.preview-bridge')
     @endif
-@endsection
+
+
+</x-shop::layouts>
